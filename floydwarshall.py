@@ -1,5 +1,8 @@
 #!/usr/bin/python
 def floydwarshall(graph):
+    #TODO: Change algorithm to fit needs 
+    
+    #source: https://jlmedina123.wordpress.com/2014/05/17/floyd-warshall-algorithm-in-python/
  
     # Initialize dist and pred:
     # copy graph into dist, but add infinite where there is
