@@ -3,7 +3,7 @@ import random
 import sys
 
 PARA_FILENAME = 'parameters.txt'
-OUT_FILENAME = '.txt'
+OUT_FILENAME = 'graph.pickle'
 
 NODE_NUM = 'NumberOfNodes'
 SUBNET_D_M = 'MeanSubnetDepth'
@@ -81,35 +81,58 @@ def add_edge(graph, parameters, nodeA, nodeB):
     graph[nodeA] += nodeB, weight
     graph[nodeB] += nodeA, weight
 
+#Implementation of the combination math operation
+def ncr(n, r):
+    r = min(r, n-r)
+    if r == 0: return 1
+    numer = reduce((lambda x, y: x * y)), range(n, n-r, -1))
+    denom = reduce((lambda x, y: x * y), range(1, r+1))
+    return numer//denom
+
+#Returns the probability of having (at least) an edge between nodeA and nodeB
+def edge_prob(nodeA_degree, nodeB_degree, total_degree):
+    n2 = total_degree - nodeA_degree
+    n1 = n2 - nodeB_degree
+    r = nodeA_degree
+    return 1 - ncr(n1, r) // ncr(n2, r)
+
+#Randomly connects all of the nodes. Nodes are
 def connect_nodes(graph, parameters, net):
+
+    degrees = []
+    total_degree = 0
+    for node in net.members:
+        degrees += node, random.normalvariate(
+            parameters[NODE_D_M],
+            parameters[NODE_D_SD])
+        total_degree += degrees[-1]
+
+    for nodeX in degrees:
+        for nodeY in degrees[nodeX+1:]:
+            if random.random() >= edge_prob(nodeX[1], nodeY[1], total_degree):
+                add_edge(graph, parameters, nodeX[0], nodeY[0])
 
     #Connect network to its subnetworks
     for subnet in net.subnet:
-        connect_nodes(graph,subnet)
+        connect_nodes(graph, parameters, subnet)
         add_edge(graph, parameters,
             random.choice(net.members),
             random.choice(subnet.members))
 
-    edge_num = []
-    for node in net.members
-        edge_num += random.normalvariate(
-            parameters[NODE_D_M],
-            parameters[NODE_D_SD])
-    
-    #TODO Connect member nodes
-
+#Generates a new graph
 def generate_graph(parameters):
     random.seed(p.seed)
     nodes = []
-    for x in range(0,parameters[NODE_NUM]):
-        nodes += x
-    subnet_topo = mk_subnet_topo(nodes, parameters, parameters[SUBNET_D_M]
+    graph = {}
+    for node in range(0,parameters[NODE_NUM]):
+        nodes += node
+        graph += node, []
 
-    return {
-        graph : connect_nodes({}, parameters, subnet_topo),
-        heuristics : {}}
+    subnet_topo = mk_subnet_topo(nodes, parameters, parameters[SUBNET_D_M])
 
+    return connect_nodes(graph, parameters, subnet_topo)
 
+#Main method
 def main():
     if len(sys.argv)>=1:
         parafile = loadpara(sys.argv[1])
@@ -121,7 +144,7 @@ def main():
     else:
         outfile = open(OUT_FILENAME,'wb')
     
-    network = generate(loadpara(parafile))
+    network = generate_graph(loadpara(parafile))
     pickle.dump(network,outfile)
     parafile.close()
     outfile.close()
