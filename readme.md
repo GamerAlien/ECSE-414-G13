@@ -46,3 +46,4 @@ Runtime:       2.18968 seconds
 
 The following plot is also generated:
 
+![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example_graph.png)
