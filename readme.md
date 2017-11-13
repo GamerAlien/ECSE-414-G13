@@ -54,7 +54,6 @@ graph = graph_generator.getFormattedGraph(G)
 #draw and plots the generated graph
 graph_generator.drawGraph(G)
 ``` 
-Creates a weighted Erdos-Renyi graph
 
 Output
 ------
