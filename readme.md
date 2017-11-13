@@ -1,9 +1,48 @@
-:smiley: Floyd Warshall Algorithm
--------------
+Installation
+-----------
 
-Contains 3 methods:
-> -  **floydwarshall(graph):** Returns 2 2-dimensional arrays __pred__ and __dist__. 
-	__pred__ contains the predecessors on the shortest path.
-	__dist__ contains the shortest distances from each vertex
-> - **getFloydWarshallResults(graph):** Prints the shortest distances between each vertex
-> - **main:** creates a dummy graph and tests the output (TO BE REPLACED BY GENERATED ARRAY)  
+This code requires python package NetworkX
+Please follow these instructions to install the package first:
+(https://networkx.github.io/documentation/networkx-1.10/install.html)
+
+
+The package also requires the installation of multiple other packages including `numpy`, `scipy`, `matplotlib` etc...
+
+Usage
+-----
+
+To change the number of nodes, the probability of edge creation and weight range, edit the following line:
+```
+G = graph_generator.generateERGraph(nodes, edge_probability, start_range, end_range)
+```
+
+Then run the following command:
+
+
+```
+python3 floydwarshall.py
+```
+
+Output
+------
+
+```
+Generating weightless graph with 200 nodes and an edge probability of 0.15...
+Generated graph!
+Setting random weights between 1 and 12 to all edges...
+Edge weights set!
+Graph generated in 0.02239 seconds!
+Number of edges: 2981
+Formatting graph...
+Graph Formatted!
+Creating adjacency matrix...
+Created Adjacency matrix!
+Started algorithm...
+Done!
+Cost:          5
+Optimal path:  1->135->171->187->14->2
+Runtime:       2.18968 seconds
+```
+
+The following plot is also generated:
+
