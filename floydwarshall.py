@@ -122,7 +122,7 @@ def printMatrix(matrix, distance=True):
 
 def main():
     # G = generateGraph(100, 100)
-    G = graph_generator.generateERGraph(200, 0.15, 1, 12)
+    G = graph_generator.generateERGraph(1000, 0.15, 1, 12)
    
     print("Number of edges: " + str(G.number_of_edges()))    
     
