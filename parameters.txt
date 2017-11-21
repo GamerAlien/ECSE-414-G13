@@ -1,9 +1,0 @@
-NumberOfNodes:100
-MeanSubnetDepth:2
-SubnetDepthStandardDeviation:0.5
-MeanNumberOfSubnets:5
-NumberOfSubnetsStandardDeviation:1
-MeanNodeDegree:5
-NodeDegreeStandardDeviation:2
-MeanEdgeWeight:5
-EdgeWeightStandardDeviation:5
