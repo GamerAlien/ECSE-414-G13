@@ -1,4 +1,7 @@
 import random
+import pickle
+import time
+import numpy as np
 from functools import reduce
 
 #Creates a topology describing the connections between autonomous systems
@@ -141,4 +144,34 @@ def create(size):
     netData['asList'] = asList
     
     return netData
+
+def getFileName(size):
+    filename = "graphs/graph_"+str(size)+"_nodes.pickle"
+    return filename
+
+def createGraph(size):
+    print("--------------------- "+str(size)+" nodes ---------------------")
+    start_time = time.time()
+    netData = create(size)
+    runtime = time.time() - start_time
+    outfile = open(getFileName(size),'wb')
+    pickle.dump(netData['network'],outfile)
+    outfile.close()
+    print("Runtime: "+str(np.around(runtime, decimals=5)))
+
+def main():
+    createGraph(10)
+    createGraph(100)
+    createGraph(500)
+    createGraph(1000)
+    createGraph(5000)
+    createGraph(2000)
+    createGraph(10000)
+    createGraph(20000)
+
+
+if __name__ == '__main__':
+    main()
+
+
 

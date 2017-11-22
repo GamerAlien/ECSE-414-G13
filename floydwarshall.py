@@ -28,8 +28,14 @@ def createAdjacencyMatrix(graph, dist, pred):
         #fill matrix with every nodes' immediate neighbors weights (if possible)
         for neighbor in graph[u]:
             # print("neighbor: "+str(neighbor[1]))
-            dist[u][neighbor[0]] = neighbor[1]
-            pred[u][neighbor[0]] = u
+
+            #using sam's generator
+            # dist[u][neighbor[0]] = neighbor[1]
+            # pred[u][neighbor[0]] = u
+
+            #using master generator
+            dist[u][neighbor] = graph[u][neighbor]
+            pred[u][neighbor] = u
 
 def floydwarshall(graph):
     start_time = time.time()

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import random
 import numpy as np
 import time
+import pickle
 
 # using networkx, manually generate a random undirected weighted graph
 def generateGraph(nodes, randomness):
@@ -67,3 +68,33 @@ def getFormattedGraph(G):
         for n in G.neighbors(u):
             formatted[u][n] = int(G[u][n]['weight'])
     return formatted
+
+def getFileName(size):
+    filename = "graphs/graph_"+str(size)+"_nodes_networkx.pickle"
+    return filename
+
+def createGraph(size):
+    print("--------------------- "+str(size)+" nodes ---------------------")
+    start_time = time.time()
+    G = generateERGraph(size, 0.20, 1, 15)
+    graph = getFormattedGraph(G)
+    runtime = time.time() - start_time
+    outfile = open(getFileName(size),'wb')
+    pickle.dump(graph,outfile)
+    outfile.close()
+    print("Runtime: "+str(np.around(runtime, decimals=5)))
+
+def main():
+    createGraph(10)
+    createGraph(100)
+    createGraph(500)
+    createGraph(1000)
+    createGraph(2000)
+    createGraph(5000)
+    createGraph(10000)
+    createGraph(15000)
+    createGraph(20000)
+ 
+
+if __name__ == '__main__':
+    main()
