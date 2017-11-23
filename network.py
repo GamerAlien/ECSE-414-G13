@@ -10,7 +10,7 @@ import numpy as np
 import sys
 
 #Creates an entire network of the specified size
-def create(size, randomness):
+def create(size, edge_percent):
 
     start_time = time()
 
@@ -25,20 +25,33 @@ def create(size, randomness):
 
         print('Generating AS with nodes ' + str(start) + ' to ' + str(end-1) + '...')
 
-        m = randomness
+        size = end-start
+        m = max(size-1, min(edge_percent,100)*size*(size-1)//100)
 
-        # select some edge destinations
-        L = np.random.choice(range(start, end), 2*m)
         # and suppose that each edge has a weight
         weights = 0.5 + 5 * np.random.rand(m)
 
         # create a graph object, add nodes to it, and the edges
-        G = nx.DiGraph()
-        G.add_nodes_from(range(start, end))
-        for i, (fr, to) in enumerate(zip(L[1::2], L[::2])):
-            if fr != to:
-                G.add_edge(fr, to, weight=np.around(weights[i])+1)
-        return G
+        AS = nx.Graph()
+        AS.add_nodes_from(range(start, end))
+
+        unconnected_nodes = list(AS.nodes().keys())
+        connected_nodes = [unconnected_nodes.pop()]
+
+        for weight in weights:
+            if unconnected_nodes:
+                node = unconnected_nodes.pop()
+                to = choice(connected_nodes)
+                connected_nodes.append(node)
+            else:
+                node = choice(connected_nodes)
+                while True:
+                    to = choice(connected_nodes)
+                    if node != to:
+                        break
+            AS.add_edge(node, to, weight=np.around(weight)+1)
+
+        return AS
 
     as_list = list(map((lambda x : create_as(x[0], x[1])), zip(as_boundaries, as_boundaries[1:])))
 
@@ -52,7 +65,6 @@ def create(size, randomness):
     get_as = {}
     edge_node = {}
     next_as = {}
-    
 
     for as_id in range(len(as_list)):
         edge_node[as_id] = {}
@@ -65,34 +77,43 @@ def create(size, randomness):
         for node in list(as1.nodes().keys()):
             get_as[node] = as1_id
 
+        #Build a map from an AS to AS edge to the corresponding edge node
         for as2_id in as_topology[as1_id]:
+            if as2_id > as1_id:
 
-            as2 = as_list[as2_id]
+                as2 = as_list[as2_id]
 
-            #Choose a node from first AS
-            as1_edge_node = choice(list(as1.nodes().keys()))
+                #Choose a node from first AS
+                as1_edge_node = choice(list(as1.nodes().keys()))
 
-            #Choose a node from first AS
-            as2_edge_node = choice(list(as2.nodes().keys()))
+                #Choose a node from first AS
+                as2_edge_node = choice(list(as2.nodes().keys()))
 
-            #Generate a random weight
-            network.add_edge(as1_edge_node, as2_edge_node, weight=0.5 + 5 * random())
+                #Generate a random weight
+                network.add_edge(as1_edge_node, as2_edge_node, weight=0.5 + 5 * random())
 
-            msp[as1_edge_node] = nx.shortest_path(as1,source=as1_edge_node)
-            edge_node[as1_id][as2_id] = as1_edge_node
-            edge_node[as2_id][as1_id] = as2_edge_node
+                msp[as1_edge_node] = nx.shortest_path_length(as1,source=as1_edge_node)
+                msp[as2_edge_node] = nx.shortest_path_length(as2,source=as2_edge_node)
+                edge_node[as1_id][as2_id] = as1_edge_node
+                edge_node[as2_id][as1_id] = as2_edge_node
 
-        for as2_id in range(len(as_list))[as1_id+1:]:
+        #Build a map from an AS to AS edge to the corresponding edge node
+        for as2_id in range(as1_id+1, len(as_list)):
 
             as1_to_as2_path = nx.shortest_path(as_topology, as1_id, as2_id)
             next_as[as1_id][as2_id] = as1_to_as2_path[1]
-            next_as[as2_id][as1_id] = as1_to_as2_path[-2]
+            if len(as1_to_as2_path) == 2:
+                next_as[as2_id][as1_id] = as1_to_as2_path[0] 
+            else:
+                next_as[as2_id][as1_id] = as1_to_as2_path[-2]
 
     def heuristic(node1, node2):
         as1 = get_as[node1]
         as2 = get_as[node2]
         if as1 != as2:
-            return msp[edge_node[as1][next_as[as1][as2]]][node1] + msp[edge_node[as2][next_as[as2][as1]]][node2]
+            second_as = next_as[as1][as2]
+            as1_edge_node = edge_node[as1][second_as]
+            return msp[as1_edge_node][node1]
         else:
             return 0
 
@@ -108,18 +129,8 @@ def create(size, randomness):
     #Close output file
     outfile.close()
 
-def load(size):
-    infile = open(str(size) + '.network' ,'rb')
+def load(size, edge_percent):
+    infile = open(str(size) + '-' + str(edge_percent) + '.network' ,'rb')
     network = dill.load(infile)
     infile.close()
     return network
-
-"""
-TODO make it not crash at this test
-create(20000, 30)
-net = load(20000)
-h = net['heuristic']
-print(h(0, 15))
-print(h(550, 3500))
-print(h(0, 19999))
-"""
