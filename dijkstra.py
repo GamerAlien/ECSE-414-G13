@@ -1,6 +1,6 @@
 import math
 import heapq as hq
-
+import graph_generator
 
 def dijkstra(graph, source_node):
     # initialize distance dict
@@ -8,7 +8,7 @@ def dijkstra(graph, source_node):
     # initialize previous node dict
     previous_node = {}
     # initialize unvisited list
-    unvisited = set()
+    unvisited = []
     # iterative initialization for each vertex in graph
     for vertex in graph:
         if vertex != source_node:
@@ -36,3 +36,8 @@ def dijkstra(graph, source_node):
                 unvisited[neighbour_index][0] = new_distance
                 # siftup the newly adjusted node until properly placed to preserve heap invariance
                 hq._siftup(unvisited, neighbour_index)
+    return distance
+
+G = graph_generator.generateERGraph(10, 0.15, 1, 10)
+graph = graph_generator.getFormattedGraph(G)
+dijkstra(graph,0)
