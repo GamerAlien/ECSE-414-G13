@@ -19,19 +19,23 @@ def executeAS(size, table):
 	graph = pickle.load(open(getFileName(size), "rb" ))
 	print("Finding shortest path from 0 to "+str(size-1)+"...")	
 
-	graph = {
-'A':[('B',2),('E',10)], 
-'B':[('A',2),('C',5),('E',7)], 
-'C':[('B',5),('D',2)], 
-'D':[('C',2),('F',1)], 
-'E':[('A',10),('B',7),('D',2),('F',3)], 
-'F':[('D',1),('E',3)]}
+# 	graph = {
+# 'A':[('B',2),('E',10)], 
+# 'B':[('A',2),('C',5),('E',7)], 
+# 'C':[('B',5),('D',2)], 
+# 'D':[('C',2),('F',1)], 
+# 'E':[('A',10),('B',7),('D',2),('F',3)], 
+# 'F':[('D',1),('E',3)]}
+
 
 	delay = 0.1
 
 	start_time = time.time()
 	h = astar.generate_heuristic(graph, size-1)
 	path, cost = astar.a_star(graph, 0,size-1, h)
+
+	# h = astar.generate_heuristic(graph, 'F')
+	# path, cost = astar.a_star(graph, 'A','F', h)
 	time.sleep(delay)
 	runtime = time.time() - start_time - delay
 

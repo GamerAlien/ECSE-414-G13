@@ -14,9 +14,11 @@ def generate_heuristic(graph, goal_node):
         print("graph[node]: "+str(graph[node]))
         # print(key=lambda x: x[1])
         # min_costs.append(min(graph[node], key=lambda x: x[1])[1])
-        min_costs.append(min(graph[node], key=lambda x: x[1])[1])
+        # print(min(graph[node].values()))
+        min_costs.append(min(graph[node].values()))
     lowest_cost = min(min_costs)
     
+    print(min_costs)
     # For each node, the minimum number of steps from the goal times the minimum edge weight
     heuristic = {}
 
@@ -29,6 +31,8 @@ def generate_heuristic(graph, goal_node):
     
     while openSet:
         node = openSet[0]
+        print("Open set: "+str(openSet))
+        print(node)
         neighbours = get_neighbours(graph, node)
         for neighbour in neighbours:
 
@@ -41,14 +45,23 @@ def generate_heuristic(graph, goal_node):
             openSet.append(neighbour)
             
         # Node's neighbours have been evaluated
-        del openSet[0]    
+        del openSet[0] 
+    print("heurostics: "+str(heuristic))   
     return heuristic
 
 def get_neighbours(graph, node):
+
 	neighbours = []
-	for i in range(0,len(graph[node])):
-		neighbours.append(graph[node][i][0])
+	# for i in range(0,len(graph[node])):
+	# 	neighbours.append(graph[node][i][0])
+	# return neighbours
+	# print(graph[node])
+	for i in graph[node]:
+		# print(i)
+		neighbours.append(i)
+		print(neighbours)
 	return neighbours
+	
 
 def reconstruct_path(cameFrom, current_node):
 	total_path = [current_node]
