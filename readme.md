@@ -99,7 +99,6 @@ python3 graph generator --probability=0.2 -a
 
 
 **Example output of graph generation**
->>>>>>> floydwarshall
 
 ```
 python3 graph_generator -p 0.2 -n 15000
@@ -135,7 +134,7 @@ if current_node == goal_node:
     return reconstruct_path(cameFrom, current_node), gScore[goal_node]
 ```
 
-Comments on Dijkstra Heap Implementation (`dijkstra.py` in root):
+**Comments on Dijkstra Heap Implementation (`dijkstra.py` in root):**
 
 The Dijkstra code has two functions: dijkstra(graph,source) and targetted_dijkstra(graph,source,destination). Note that graph has to be a standard graph in dictionary format, meaning graph_generator.py's getFormattedGraph() functions comes in useful here.
 
