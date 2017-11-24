@@ -4,6 +4,9 @@ import random
 import numpy as np
 import time
 import pickle
+import sys
+import getopt
+import os
 
 # using networkx, manually generate a random undirected weighted graph
 def generateGraph(nodes, randomness):
@@ -38,6 +41,7 @@ def generateERGraph(nodes, edge_probability, range_start, range_end):
     start_time = time.time()
     print("Generating weightless graph with "+str(nodes)+" nodes and an edge probability of "+str(edge_probability)+"...")
     G = nx.erdos_renyi_graph(nodes,edge_probability)
+    print("Number of edges: "+ str(G.number_of_edges()))
     print("Generated graph!")
     G = setEdgeWeights(G, range_start, range_end)
     print("Edge weights set!")
@@ -57,44 +61,88 @@ def drawGraph(G):
 # 'C':[('B',5),('D',2)], 
 # 'D':[('C',2),('F',1)], 
 # 'E':[('A',10),('B',7),('D',2),('F',3)], 
-# 'F':[('D',1),('E',3)]}
-
+# 'F':[('D',1),('E',3)]}s
 def getFormattedGraph(G):
     print("Formatting graph...")
+    start_time = time.time()
     formatted = {}
     for u,d in G.nodes(data=True):
+        print('\rLoop: %s, Runtime: %s' % (str(u), str(np.around(time.time() - start_time, decimals=5))), end='', flush=True)
         formatted[u] = {}
         # print("Node"+str(u))
         for n in G.neighbors(u):
             formatted[u][n] = int(G[u][n]['weight'])
     return formatted
 
-def getFileName(size):
-    filename = "graphs/graph_"+str(size)+"_nodes_networkx.pickle"
+def getFileName(size, percent):
+    if percent == 0.2:
+        filename = "../graphs/graph_"+str(size)+"_nodes_networkx_20percent.pickle"
+    elif percent == 0.5:
+        filename = "../graphs/graph_"+str(size)+"_nodes_networkx.pickle"
+    else:
+        filename = "../graphs/graph_"+str(size)+"_nodes_networkx_"+str(int(percent*100))+"percent.pickle"
     return filename
 
-def createGraph(size):
+def createGraph(size, percent):
+
     print("--------------------- "+str(size)+" nodes ---------------------")
     start_time = time.time()
-    G = generateERGraph(size, 0.20, 1, 15)
+    G = generateERGraph(size, percent, 5, 50)
     graph = getFormattedGraph(G)
     runtime = time.time() - start_time
-    outfile = open(getFileName(size),'wb')
+    outfile = open(getFileName(size, percent),'wb')
     pickle.dump(graph,outfile)
     outfile.close()
-    print("Runtime: "+str(np.around(runtime, decimals=5)))
+    print("\nRuntime: "+str(np.around(runtime, decimals=5)))
+    return drawGraph(G)
 
-def main():
-    createGraph(10)
-    createGraph(100)
-    createGraph(500)
-    createGraph(1000)
-    createGraph(2000)
-    createGraph(5000)
-    createGraph(10000)
-    createGraph(15000)
-    createGraph(20000)
- 
+def main(argv):
+
+    # ain(argv)
+    if not os.path.exists("../graphs/"):
+        print("Created graph directory!")
+        os.mkdir("../graphs/")
+    optlist, argv = getopt.getopt(argv, 'p:n:da', ['probability=', 'nodes='])
+
+
+    percent = 0.20
+    run_all=False
+    draw = False
+    nodes = 10
+    print(optlist)
+    for opt, arg in optlist:
+        if opt in ('-p', '--probability'):
+            try:
+                print(arg)
+                if float(arg) < 0 or float(arg) > 1:
+                    print("ERROR: probability not valid: use 0.2, 0.5...")
+                    sys.exit(2)
+                percent = float(arg)
+            except:
+                print("ERROR: Invalid probability!")
+                sys.exit(2)
+        elif opt in ('-n', '--nodes'):
+            nodes = arg
+        elif opt == '-a':
+            run_all = True
+        elif opt == '-d':
+            draw = True
+
+    if run_all:
+        # createGraph(10, percent)
+        # createGraph(100, percent)
+        # createGraph(500, percent)
+        # createGraph(1000, percent)
+        # createGraph(2000, percent)
+        # createGraph(5000, percent)
+        # createGraph(10000, percent)
+        # createGraph(15000, percent)
+        createGraph(20000, percent)
+    else:
+        if draw:
+            print(createGraph(int(nodes), percent))
+        else:
+            createGraph(int(nodes), percent) 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
