@@ -79,3 +79,6 @@ Runtime:       2.18968 seconds
 The following plot is also generated:
 
 ![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example_graph.png)
+
+## Dijkstra
+The Dijkstra code has two functions: dijkstra(graph,source) and targetted_dijkstra(graph,source,destination). Note that graph has to be a standard graph in dictionary format, meaning graph_generator.py's getFormattedGraph() functions comes in useful here.
