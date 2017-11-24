@@ -57,12 +57,11 @@ cd src
 python3 graph generator --probability=0.2 -a 
 ``` 
 
-<aside class="warning">
-Be careful about running a large number of nodes with a high edge probability!!
-If your computer does not have the required memory, the script will kill itself
-Creating a graph with 15000 nodes and edge probability of 50% has failed on a decent computer (16GB RAM)
-Creating a graph with 20000 nodes and edge probability of 20% has failed on a decent computer (16GB RAM)
-</aside>
+> Be careful about running a large number of nodes with a high edge probability!!
+> If your computer does not have the required memory, the script will kill itself
+> Creating a graph with 15000 nodes and edge probability of 50% has failed on a decent computer (16GB RAM)
+> Creating a graph with 20000 nodes and edge probability of 20% has failed on a decent computer (16GB RAM)
+
 
 **Example output of graph generation**
 
@@ -197,16 +196,14 @@ Predecesors matrix in shortest path:
 
 # Testing procedure
 
-<aside class="notice">
-To run the tests make sure that you have generated all appropriate graphs, else the tests might not run
-</aside>
+> To run the tests make sure that you have generated all appropriate graphs, else the tests might not run
+
 
 The following tests will generate a txt result file in `results/` which is updated whenever a new test is run.
 Different results files will be generated according to the algorithm run and the edge probability.
 
-<aside class="notice">
-The pickle files inside the results directory serve as a history for the previous results, DO NOT ERASE THEM if you wish to keep updating your results files
-</aside>
+> The pickle files inside the results directory serve as a history for the previous results, DO NOT ERASE THEM if you wish to keep updating your results files
+
 
 
 Run the following commands to test the algorithms in the `test` directory:
