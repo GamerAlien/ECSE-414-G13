@@ -82,7 +82,7 @@ Runtime: 265.42249
 
 **Example of plot**
 
-![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example_graph.png)
+![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example.png)
 
 # Testing environment
 
