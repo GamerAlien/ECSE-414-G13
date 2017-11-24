@@ -36,22 +36,22 @@ graph = {0 : {1:6, 2:8},
 ```
 The graphs are saved as pickle files in the `graphs/` folder which is automatically created upon runtime.
 
-### Generate a graph with 10000 nodes and edge probability of 20%
+**Generate a graph with 10000 nodes and edge probability of 20%**
 ```bash
 python3 graph generator -p 0.2 -n 10000
 ``` 
-### Generate a graph with 2000 nodes and edge probability of 50%
+**Generate a graph with 2000 nodes and edge probability of 50%**
 ```bash
 python3 graph generator --probability=0.5 --nodes=2000
 ``` 
 
-### Generate a graph with 10 nodes, edge probability of 50%
+**Generate a graph with 10 nodes, edge probability of 50%**
 Also generates plot of the graph
 ```bash
 python3 graph generator --probability=0.5 --nodes=2000 -d
 ``` 
 
-### Generate all graphs with 10, 100, 500, 1000, 2000, 5000, 10000, 15000 nodes
+**Generate all graphs with 10, 100, 500, 1000, 2000, 5000, 10000, 15000 nodes**
 ```bash
 cd src
 python3 graph generator --probability=0.2 -a 
@@ -64,7 +64,7 @@ Creating a graph with 15000 nodes and edge probability of 50% has failed on a de
 Creating a graph with 20000 nodes and edge probability of 20% has failed on a decent computer (16GB RAM)
 </aside>
 
-### Example output of graph generation
+**Example output of graph generation**
 
 ```
 python3 graph_generator -p 0.2 -n 15000
@@ -81,7 +81,7 @@ Loop: 14999, Runtime: 85.06316
 Runtime: 265.42249
 ```
 
-### Example of plot
+**Example of plot**
 
 ![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example_graph.png)
 
@@ -127,7 +127,7 @@ For a graph with a maximum of 15 nodes, you can uncomment the lines 93-97 in `sr
 #     printMatrix(pred.copy(), False);
 ```
 
-### Example of matrix vizualization
+**Example of matrix vizualization**
 
 ```bash
 Distance matrix 
@@ -218,7 +218,7 @@ Runs Floyd-Warshall on the 100 nodes graph with 20% edge probability
 python3 test_fw.py -p 0.20 -n 100
 ```
 
-### Output
+**Output
 ```
 --------------------- 100 nodes ---------------------
 Finding shortest path from 0 to 99...
@@ -245,7 +245,7 @@ python3 test_as.py -p 0.50 -n 1000
 python3 test_as.py -p 0.50 -n 2000
 ```
 
-### Output
+**Output
 ```
 creating new table
 --------------------- 1000 nodes ---------------------
@@ -288,7 +288,7 @@ The iteration number is the numbe of while loop iterations before reaching the t
 python3 test_dijkstra -p 0.3 -a
 ```
 
-### Output
+**Output
 ```
 --------------------- 10 nodes ---------------------
 Iteration: 4, Runtime: 0.00032
@@ -366,19 +366,15 @@ Nodes |Algorithm | Path | Cost | Runtime | Iterations
 10 | A* | 0, 2, 5, 9 | 39 | 0.00045 | 6
 10 | Floyd-Warshall | 0, 2, 5, 9 | 34 | 0.00093 | N/A
 10 | Dijkstra | 0, 2, 5, 9 | 39 | 0.00049 | 7
-- | - | - | - | - | - 
 100 | A* | 0, 1, 3, 99 | 20 | 0.00263 | 22
 100 | Floyd-Warshall | 0, 1, 3, 99 | 20 | 0.32351 | N/A
 100 | Dijkstra | 0, 1, 3, 99 | 20 | 0.0049 | 35
-
 500 | A* | 0, 161, 499 | 15 | 0.33082 | 170
 500 | Floyd-Warshall | 0, 161, 499 | 15 | 36.94131 | N/A
 500 | Dijkstra | 0, 161, 499 | 15 | 0.51513 | 267
-
 1000 | A* | 0, 48, 999 | 15 | 4.77038 | 676
 1000 | Floyd-Warshall | 0, 48, 999 | 15 | 288.87987 | N/A
 1000 | Dijkstra | 0, 48, 999 | 15 | 5.70721 | 851
-
 2000 | A* | 0, 214, 1999 | 12 | 0.89067 | 26
 2000 | Floyd-Warshall |0, 214, 1999 | 12 | 2344.97588 | N/A
 2000 | Dijkstra |0, 214, 1999 | 12 | 7.8211 | 228
