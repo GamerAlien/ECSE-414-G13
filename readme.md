@@ -51,7 +51,6 @@ Also generates plot of the graph
 python3 graph generator --probability=0.5 --nodes=2000 -d
 ``` 
 
-<<<<<<< HEAD
 Graph Generator
 ---------------
 Run the following code snippet to generate a graph with the format :
@@ -119,7 +118,7 @@ Runtime: 265.42249
 
 **Example of plot**
 
-![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example_graph.png)
+![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example.png)
 
 # Testing environment
 
@@ -127,15 +126,18 @@ All the following algorithms are given s source node 0 and a target node for the
 The target node is always the last node from the generated graph (ie. 9, 99, 199, 4999 etc..)
 
 ## Dijkstra
-
-In our code, Dijkstra is greedy meaning that it will stop after having found its shortest path
+In the src directory (using A*'s Dijkstra implementation):
+Dijkstra is greedy meaning that it will stop after having found its shortest path
 To execute a regular Dijkstra, simply comment the lines 117-118 in `src/dijkstra.py`
 
 ```python
 if current_node == goal_node:
     return reconstruct_path(cameFrom, current_node), gScore[goal_node]
 ```
-This algorithm's complexity depends on the heuristic
+
+Comments on Dijkstra Heap Implementation (`dijkstra.py` in root):
+
+The Dijkstra code has two functions: dijkstra(graph,source) and targetted_dijkstra(graph,source,destination). Note that graph has to be a standard graph in dictionary format, meaning graph_generator.py's getFormattedGraph() functions comes in useful here.
 
 ## A*
 
@@ -148,7 +150,7 @@ To execute a regular A*, simply comment the lines 67-68 in `src/astar.py`
 if current_node == goal_node:
     return reconstruct_path(cameFrom, current_node), gScore[goal_node]
 ```
-This algorithm has a complexity of O(V^3)
+This algorithm's complexity depends on the heuristic
 
 ## Floyd-Warshall
 
@@ -395,12 +397,6 @@ The following tests were run on a Dell XPS:
 * 16GB RAM
 * Run on Ubuntu 16.04LTS
 
-<<<<<<< HEAD
-![alt text](https://raw.githubusercontent.com/GamerAlien/ECSE-414-G13/floydwarshall/example_graph.png)
-
-## Dijkstra
-The Dijkstra code has two functions: dijkstra(graph,source) and targetted_dijkstra(graph,source,destination). Note that graph has to be a standard graph in dictionary format, meaning graph_generator.py's getFormattedGraph() functions comes in useful here.
-=======
 Nodes |Algorithm | Path | Cost | Runtime | Iterations
 ----- | ---------------- | ----------------- | ---- | ---------- | -----------
 10 | A* | 0, 2, 5, 9 | 39 | 0.00045 | 6
@@ -418,4 +414,3 @@ Nodes |Algorithm | Path | Cost | Runtime | Iterations
 2000 | A* | 0, 214, 1999 | 12 | 0.89067 | 26
 2000 | Floyd-Warshall |0, 214, 1999 | 12 | 2344.97588 | N/A
 2000 | Dijkstra |0, 214, 1999 | 12 | 7.8211 | 228
->>>>>>> floydwarshall
