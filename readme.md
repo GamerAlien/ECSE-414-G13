@@ -218,7 +218,7 @@ Runs Floyd-Warshall on the 100 nodes graph with 20% edge probability
 python3 test_fw.py -p 0.20 -n 100
 ```
 
-**Output
+**Output**
 ```
 --------------------- 100 nodes ---------------------
 Finding shortest path from 0 to 99...
@@ -239,13 +239,13 @@ Results file: `results/resultsFW_20percent.txt`
 
 ## A*
 
-*Runs A* on the 1000 and 2000 nodes graph with 50% edge probability
+* Runs A* on the 1000 and 2000 nodes graph with 50% edge probability
 ```
 python3 test_as.py -p 0.50 -n 1000
 python3 test_as.py -p 0.50 -n 2000
 ```
 
-**Output
+**Output**
 ```
 creating new table
 --------------------- 1000 nodes ---------------------
@@ -283,12 +283,12 @@ The iteration number is the numbe of while loop iterations before reaching the t
 
 ## Dijkstra
 
-*Runs A* on all the graphs generated with 0.3 percent edge probability
+* Runs Dijkstra on all the graphs generated with 0.3 percent edge probability
 ```
 python3 test_dijkstra -p 0.3 -a
 ```
 
-**Output
+**Output**
 ```
 --------------------- 10 nodes ---------------------
 Iteration: 4, Runtime: 0.00032
