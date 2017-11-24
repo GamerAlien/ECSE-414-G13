@@ -94,7 +94,7 @@ def createGraph(size, percent):
     pickle.dump(graph,outfile)
     outfile.close()
     print("\nRuntime: "+str(np.around(runtime, decimals=5)))
-    return drawGraph(G)
+    return G
 
 def main(argv):
 
@@ -109,11 +109,9 @@ def main(argv):
     run_all=False
     draw = False
     nodes = 10
-    print(optlist)
     for opt, arg in optlist:
         if opt in ('-p', '--probability'):
             try:
-                print(arg)
                 if float(arg) < 0 or float(arg) > 1:
                     print("ERROR: probability not valid: use 0.2, 0.5...")
                     sys.exit(2)
@@ -129,18 +127,19 @@ def main(argv):
             draw = True
 
     if run_all:
-        # createGraph(10, percent)
-        # createGraph(100, percent)
-        # createGraph(500, percent)
-        # createGraph(1000, percent)
-        # createGraph(2000, percent)
-        # createGraph(5000, percent)
-        # createGraph(10000, percent)
+        createGraph(10, percent)
+        createGraph(100, percent)
+        createGraph(500, percent)
+        createGraph(1000, percent)
+        createGraph(2000, percent)
+        createGraph(5000, percent)
+        createGraph(10000, percent)
         # createGraph(15000, percent)
-        createGraph(20000, percent)
+        # createGraph(20000, percent)
     else:
         if draw:
-            print(createGraph(int(nodes), percent))
+            G = createGraph(int(nodes), percent)
+            drawGraph(G)
         else:
             createGraph(int(nodes), percent) 
 

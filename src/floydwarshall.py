@@ -3,6 +3,7 @@ import time
 import numpy as np
 import sys
 import os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src import texttable_mod
 
@@ -90,13 +91,12 @@ def getFloydWarshallResults(graph, start, end):
     results = getShortestPath(dist, pred, start, end)
 
     # will print the matrixes only if < 10 nodes
-    # if(len(dist) <= 10):
-    # print("Shortest distance matrix from each vertex:\n")
-    # printMatrix(dist.copy());
-    # print("\nPredecesors matrix in shortest path:\n")
-    # printMatrix(pred.copy(), False);
+    # if (len(dist) <= 15):
+    #     print("Shortest distance matrix from each vertex:\n")
+    #     printMatrix(dist.copy());
+    #     print("\nPredecesors matrix in shortest path:\n")
+    #     printMatrix(pred.copy(), False);
     return {'runtime': str(np.around(runtime, decimals=5)), 'cost': results['cost'], 'path': results['path']}
-
 
 
 # Helper function

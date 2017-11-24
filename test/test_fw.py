@@ -24,9 +24,13 @@ def getFileName(size, percent):
 
 def executeFW(size, table, percent):
     print("--------------------- " + str(size) + " nodes ---------------------")
-    # runtime = generateGraph(size)
-    # print("Graph generation time: "+runtime+" 	seconds")
-    graph = pickle.load(open(getFileName(size, percent), "rb"))
+
+    try:
+        graph = pickle.load(open(getFileName(size, percent), "rb"))
+    except:
+        print('No graph generated with '+str(size)+'nodes and '+str(percent)+'edge probability!')
+        print('Continuing to next execution if any...')
+        return None
     # graph = final_network.getFormattedGraph(graph)
     print("Finding shortest path from 0 to " + str(size - 1) + "...")
     # print(graph)

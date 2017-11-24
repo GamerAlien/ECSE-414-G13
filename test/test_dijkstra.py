@@ -27,7 +27,12 @@ def executeD(size, table, percent):
     print("--------------------- " + str(size) + " nodes ---------------------")
     # runtime = generateGraph(size)
     # print("Graph generation time: "+runtime+" 	seconds")
-    graph = pickle.load(open(getFileName(size, percent), "rb"))
+    try:
+        graph = pickle.load(open(getFileName(size, percent), "rb"))
+    except:
+        print('No graph generated with '+str(size)+'nodes and '+str(percent)+'edge probability!')
+        print('Continuing to next execution if any...')
+        return None
     # graph = final_network.getFormattedGraph(graph)
     delay = 0.1
 
@@ -67,7 +72,7 @@ def dijkstraTests(run_all, nodes, percent):
         executeD(1000, tableD, percent)
         executeD(2000, tableD, percent)
         executeD(5000, tableD, percent)
-        executeD(10000, tableD, percent)
+        # executeD(10000, tableD, percent)
     else:
         executeD(int(nodes), tableD, percent)
 
