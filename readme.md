@@ -6,14 +6,14 @@ Please follow these instructions to install the package first:
 
 
 The package also requires the installation of multiple other packages including:
-*`numpy`
-*`scipy`
-*`matplotlib` etc...
+* `numpy`
+* `scipy`
+* `matplotlib` etc...
 
 Additionally, you will need these python packages:
-*`getopt`
-*`pickle`
-*`texttable`
+* `getopt`
+* `pickle`
+* `texttable`
 
 # Graph Generator
 
@@ -357,9 +357,9 @@ Iteration: 4049, Runtime: 357.15096
 
 
 The following tests were run on a Dell XPS:
-*8x Intel(R) Core(™) i7-6700HQ CPU @2.6GHz
-*16GB RAM
-*Run on Ubuntu 16.04LTS
+* 8x Intel(R) Core(™) i7-6700HQ CPU @2.6GHz
+* 16GB RAM
+* Run on Ubuntu 16.04LTS
 
 Nodes |Algorithm | Path | Cost | Runtime | Iterations
 ----- | ---------------- | ----------------- | ---- | ---------- | -----------
