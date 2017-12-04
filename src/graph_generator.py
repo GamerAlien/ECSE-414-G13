@@ -175,8 +175,5 @@ def main(argv):
         else:
             createGraph(int(nodes), percent) 
 
-#if __name__ == '__main__':
-#    main(sys.argv[1:])
-
-G = generateGraph(1000, 1000)
-plotGraphCharacteristics(G)
+if __name__ == '__main__':
+    main(sys.argv[1:])
