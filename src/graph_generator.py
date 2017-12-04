@@ -7,6 +7,8 @@ import pickle
 import sys
 import getopt
 import os
+from functools import reduce
+from collections import Counter
 
 # using networkx, manually generate a random undirected weighted graph
 def generateGraph(nodes, randomness):
@@ -73,6 +75,36 @@ def getFormattedGraph(G):
         for n in G.neighbors(u):
             formatted[u][n] = int(G[u][n]['weight'])
     return formatted
+
+def plotGraphCharacteristics(G):
+
+    def density(li):
+
+        counter = Counter(li)
+        x = []
+        y = []
+
+        for key in sorted(list(counter)):
+            x.append(key)
+            y.append(counter[key])
+
+        return (x,y);
+
+    w_list = list(map((lambda x: x[2]['weight']) ,G.edges(data=True)))
+    d_list = list(map((lambda x: x[1]) ,G.degree()))
+
+    w = density(w_list)
+    d = density(d_list)
+
+    plt.subplot(121)
+    plt.bar(w[0],w[1])
+    plt.xlabel('weight')
+    plt.ylabel('number of edges')
+    plt.subplot(122)
+    plt.bar(d[0],d[1])
+    plt.xlabel('degree')
+    plt.show()
+
 
 def getFileName(size, percent):
     if percent == 0.2:
@@ -143,5 +175,8 @@ def main(argv):
         else:
             createGraph(int(nodes), percent) 
 
-if __name__ == '__main__':
-    main(sys.argv[1:])
+#if __name__ == '__main__':
+#    main(sys.argv[1:])
+
+G = generateGraph(1000, 1000)
+plotGraphCharacteristics(G)
