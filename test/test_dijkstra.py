@@ -75,7 +75,7 @@ def execute_iteration(size, percent):
 
 def test_all():
     #sizes = [10, 100, 500, 1000, 2000, 5000, 10000, 15000]
-    sizes = [10, 100]
+    sizes = [2000]
     percents = [0.2, 0.5]
     #clear results file
     results_file_name = "../results/dijkstra_results.csv"
