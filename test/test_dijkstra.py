@@ -5,12 +5,13 @@ import texttable
 import sys
 import getopt
 import os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src import dijkstra
 
 
 def output(file_handle, message):
-    file_handle.write("\n"+str(message))
+    file_handle.write("\n" + str(message))
 
 
 def getFileName(size, percent):
@@ -30,7 +31,7 @@ def executeD(size, table, percent):
     try:
         graph = pickle.load(open(getFileName(size, percent), "rb"))
     except:
-        print('No graph generated with '+str(size)+'nodes and '+str(percent)+'edge probability!')
+        print('No graph generated with ' + str(size) + 'nodes and ' + str(percent) + 'edge probability!')
         print('Continuing to next execution if any...')
         return None
     # graph = final_network.getFormattedGraph(graph)
@@ -51,13 +52,45 @@ def executeD(size, table, percent):
     return results
 
 
+def execute_iteration(size, percent):
+    try:
+        graph = pickle.load(open(getFileName(size, percent), "rb"))
+    except:
+        print('failed to open graph pickle, aborting...')
+        return None
+
+    results_file_name = "../results/dijkstra_results.csv"
+    results_file = open(results_file_name, 'a')
+    delay = 0.1
+    for i in range(1, 10):
+        node_number = i * size / 10
+        start_time = time.time()
+        path, cost = dijkstra.dijkstra(graph, 0, node_number)
+
+        time.sleep(delay)
+        runtime = time.time() - start_time - delay
+        results = str(size) + ',' + str(percent) + ',' + str(node_number) + ',' + str(runtime) + '\n'
+        results_file.write(results)
+
+
+def test_all():
+    #sizes = [10, 100, 500, 1000, 2000, 5000, 10000, 15000]
+    sizes = [10, 100]
+    percents = [0.2, 0.5]
+    #clear results file
+    results_file_name = "../results/dijkstra_results.csv"
+    results_file = open(results_file_name, 'w').close()
+    for size in sizes:
+        for percent in percents:
+            execute_iteration(size, percent)
+
+
 def dijkstraTests(run_all, nodes, percent):
-
-
     try:
         h = open("../results/results_table_D_" + str(int(percent * 100)) + "percent.pickle", 'rb')
         tableD = pickle.load(h)
         print("appending to old table results")
+        h.close()
     except:
         print("creating new table")
         tableD = texttable.Texttable()
@@ -78,11 +111,9 @@ def dijkstraTests(run_all, nodes, percent):
 
     print(tableD.draw())
     output(open("../results/resultsD_" + str(int(percent * 100)) + "percent.txt", 'w+'), tableD.draw())
-    h.close()
+
     table_pickle = open("../results/results_table_D_" + str(int(percent * 100)) + "percent.pickle", 'wb')
     pickle.dump(tableD, table_pickle)
-
-
 
 
 def main(argv):
@@ -107,6 +138,7 @@ def main(argv):
             run_all = True
 
     dijkstraTests(run_all, int(nodes), percent)
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])
