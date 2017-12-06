@@ -1,6 +1,6 @@
 from test import test_dijkstra as td
 from test import test_as as tas
 
-sizes = [500]
+sizes = [100]
 td.test_all(sizes)
 tas.test_all(sizes)

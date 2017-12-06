@@ -68,8 +68,13 @@ def execute_iteration(size, percent):
         path, cost, iteration = dijkstra.dijkstra(graph, 0, node_number)
         time.sleep(delay)
         runtime = time.time() - start_time - delay
-        results = str(size) + ',' + str(percent) + ',' + str(node_number) + ',' + str(runtime) + ',' + str(
-            iteration) + ',' + str(path) + '\n'
+        results = str(size) + ',' \
+                  + str(percent) + ',' \
+                  + str(node_number) + ',' \
+                  + str(runtime) + ',' \
+                  + str(iteration) + ',' \
+                  + str(cost) + ',' \
+                  + str(path) + '\n'
         results_file.write(results)
 
 

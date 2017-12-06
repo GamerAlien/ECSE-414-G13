@@ -5,9 +5,9 @@ import texttable
 import sys
 import getopt
 import os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src import astar
-
 
 
 def output(file_handle, message):
@@ -30,7 +30,7 @@ def executeAS(size, table, percent):
     try:
         graph = pickle.load(open(getFileName(size, percent), "rb"))
     except:
-        print('No graph generated with '+str(size)+'nodes and '+str(percent)+'edge probability!')
+        print('No graph generated with ' + str(size) + 'nodes and ' + str(percent) + 'edge probability!')
         print('Continuing to next execution if any...')
         return None
     # graph = final_network.getFormattedGraph(graph)
@@ -56,6 +56,7 @@ def executeAS(size, table, percent):
     table.add_rows([[str(size) + ' nodes', results['path'], results['cost'], results['runtime'] + " seconds"]], False)
     return results
 
+
 def execute_iteration(size, percent):
     try:
         graph = pickle.load(open(getFileName(size, percent), "rb"))
@@ -76,9 +77,16 @@ def execute_iteration(size, percent):
         path, cost, iteration = astar.a_star(graph, 0, node_number, h)
         time.sleep(delay)
         runtime = time.time() - start_time - delay
-        results = str(size) + ',' + str(percent) + ',' + str(node_number) + ',' + str(runtime) +','+str(heuristic_runtime)+ ',' + str(
-            iteration) + ',' + str(path) + '\n'
+        results = str(size) + ',' \
+                  + str(percent) + ',' \
+                  + str(node_number) + ',' \
+                  + str(runtime) + ',' \
+                  + str(heuristic_runtime) + ',' \
+                  + str(iteration) + ',' \
+                  + str(cost) + ',' \
+                  + str(path) + '\n'
         results_file.write(results)
+
 
 def test_all(sizes):
     # sizes = [10, 100, 500, 1000, 2000, 5000, 10000, 15000]
@@ -89,6 +97,7 @@ def test_all(sizes):
     for size in sizes:
         for percent in percents:
             execute_iteration(size, percent)
+
 
 def astarTests(run_all, nodes, percent):
     try:
@@ -128,7 +137,6 @@ def astarTests(run_all, nodes, percent):
 
 
 def main(argv):
-
     if not os.path.exists("../results/"):
         print("Created results directory!")
         os.mkdir("../results/")
@@ -153,6 +161,7 @@ def main(argv):
             run_all = True
 
     astarTests(run_all, int(nodes), percent)
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])
