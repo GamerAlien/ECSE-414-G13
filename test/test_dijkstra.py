@@ -65,19 +65,19 @@ def execute_iteration(size, percent):
     for i in range(1, 10):
         node_number = i * size / 10
         start_time = time.time()
-        path, cost = dijkstra.dijkstra(graph, 0, node_number)
-
+        path, cost, iteration = dijkstra.dijkstra(graph, 0, node_number)
         time.sleep(delay)
         runtime = time.time() - start_time - delay
-        results = str(size) + ',' + str(percent) + ',' + str(node_number) + ',' + str(runtime) + '\n'
+        results = str(size) + ',' + str(percent) + ',' + str(node_number) + ',' + str(runtime) + ',' + str(
+            iteration) + ',' + str(path) + '\n'
         results_file.write(results)
 
 
 def test_all():
-    #sizes = [10, 100, 500, 1000, 2000, 5000, 10000, 15000]
-    sizes = [2000]
+    # sizes = [10, 100, 500, 1000, 2000, 5000, 10000, 15000]
+    sizes = [5000]
     percents = [0.2, 0.5]
-    #clear results file
+    # clear results file
     results_file_name = "../results/dijkstra_results.csv"
     results_file = open(results_file_name, 'w').close()
     for size in sizes:

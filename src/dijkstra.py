@@ -65,7 +65,7 @@ def dijkstra(graph, start_node, goal_node):
         #print('\rIteration: %s, Runtime: %s' % (str(iteration), str(np.around(runtime, decimals=5))), end='', flush=True)
         iteration+=1
         if current_node == goal_node:
-            return reconstruct_path(cameFrom, current_node), gScore[goal_node]
+            return (reconstruct_path(cameFrom, goal_node), gScore[goal_node], iteration)
 
         # Move current node to closed set
         del openSet[current_node]
@@ -102,4 +102,4 @@ def dijkstra(graph, start_node, goal_node):
     # print(fScore)
     # print(gScore)
     # print(cameFrom)
-    return reconstruct_path(cameFrom, goal_node), gScore[goal_node], iteration
+    return (reconstruct_path(cameFrom, goal_node), gScore[goal_node], iteration)

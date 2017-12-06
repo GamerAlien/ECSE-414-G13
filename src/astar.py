@@ -115,7 +115,7 @@ def a_star(graph, start_node, goal_node, heuristic):
               flush=True)
         iteration += 1
         if current_node == goal_node:
-            return reconstruct_path(cameFrom, current_node), gScore[goal_node]
+            return reconstruct_path(cameFrom, current_node), gScore[goal_node],iteration
 
         # Move current node to closed set
         del openSet[current_node]
@@ -148,4 +148,4 @@ def a_star(graph, start_node, goal_node, heuristic):
             # Discover new node
             if neighbour not in openSet:
                 openSet[neighbour] = fScore[neighbour]
-    return reconstruct_path(cameFrom, current_node), gScore[goal_node]
+    return reconstruct_path(cameFrom, current_node), gScore[goal_node],iteration
