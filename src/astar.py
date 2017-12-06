@@ -146,6 +146,6 @@ def a_star(graph, start_node, goal_node, heuristic):
             fScore[neighbour] = gScore[neighbour] + heuristic[neighbour]
 
             # Discover new node
-            if neighbour not in openSet:
-                openSet[neighbour] = fScore[neighbour]
+            #if neighbour not in openSet:
+            openSet[neighbour] = fScore[neighbour] #Add tab if previous line is uncommented
     return reconstruct_path(cameFrom, current_node), gScore[goal_node],iteration
