@@ -80,9 +80,8 @@ def execute_iteration(size, percent):
             iteration) + ',' + str(path) + '\n'
         results_file.write(results)
 
-def test_all():
+def test_all(sizes):
     # sizes = [10, 100, 500, 1000, 2000, 5000, 10000, 15000]
-    sizes = [5000]
     percents = [0.2, 0.5]
     # clear results file
     results_file_name = "../results/astar_results.csv"
